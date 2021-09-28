@@ -11,12 +11,17 @@ const validateJWT = async (req, res, next) => {
     ) {
       const { authorization } = req.headers;
       const payload = authorization
-        ? jwt.verify(authorization, "i_am_secret")
+        ? jwt.verify(
+            authorization.includes("Bearer")
+              ? authorization.split(" ")[1]
+              : authorization,
+            process.env.JWT_SECRET
+          )
         : undefined;
 
       if (payload) {
         let foundUser = await UserModel.findOne({ where: { id: payload.id } });
-        console.log(payload);
+        // console.log(payload);
         if (foundUser) {
           req.user = foundUser;
           next();

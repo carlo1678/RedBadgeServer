@@ -14,6 +14,7 @@ app.use(middleware.CORS);
 app.use(Express.json());
 app.use("/user", controllers.userController);
 app.use("/songs", controllers.songsController);
+app.use("/playlist", controllers.playlistController);
 
 dbConnection
   .authenticate()
