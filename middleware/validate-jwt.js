@@ -21,6 +21,7 @@ const validateJWT = async (req, res, next) => {
 
       if (payload) {
         let foundUser = await UserModel.findOne({ where: { id: payload.id } });
+        // Put a comma after payload.id, make whatever field is called in the user table for admin = true.
         // console.log(payload);
         if (foundUser) {
           req.user = foundUser;
@@ -38,5 +39,7 @@ const validateJWT = async (req, res, next) => {
     res.status(500).json({ error: error });
   }
 };
+
+// Make another file within middleware, called validate-admin. It looks very similar to validate-jwt, except for one line.
 
 module.exports = validateJWT;

@@ -8,6 +8,7 @@ PlaylistModel.hasMany(FavoriteSongModel);
 PlaylistModel.belongsTo(UserModel);
 FavoriteSongModel.belongsTo(UserModel);
 Comments.belongsTo(UserModel);
-Comments.hasMany(PlaylistModel);
+PlaylistModel.hasMany(Comments);
+UserModel.hasMany(PlaylistModel);
 
 module.exports = { UserModel, FavoriteSongModel, PlaylistModel, Comments };

@@ -5,10 +5,10 @@ const router = Express.Router();
 const { FavoriteSongModel } = require("../models");
 
 router.post("/add", validateJWT, async (req, res) => {
-  const { mbid } = req.body.songs;
+  const { url } = req.body.songs;
   const userId = req.user.id;
   const favoriteSong = {
-    mbid: mbid,
+    url: url,
     userId: userId,
   };
   try {

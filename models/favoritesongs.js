@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const db = require("../db");
 
 const FavoriteSong = db.define("songs", {
-  mbid: {
+  url: {
     type: DataTypes.STRING(100),
     allowNull: false,
   },
