@@ -4,9 +4,13 @@ const db = require("../db");
 const Playlist = db.define("playlist", {
   title: {
     type: DataTypes.STRING,
-    allowNull: false,
+    allowNull: true,
   },
   description: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  songUrl: {
     type: DataTypes.STRING,
     allowNull: false,
   },

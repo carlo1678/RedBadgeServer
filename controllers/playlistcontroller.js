@@ -1,7 +1,25 @@
-const Express = require("express");
+const router = require("express").Router();
 const { validateJWT } = require("../middleware");
-const router = Express.Router();
 const { PlaylistModel } = require("../models");
+const { route } = require("./userLogin");
+
+router.post("/addSong/:id", validateJWT, async (req, res) => {
+  const { songUrl } = req.body.playlist;
+  const songId = req.params.id;
+  const userId = req.user.id;
+  const song = {
+    id: songId,
+    songUrl: songUrl,
+    userId: userId,
+  };
+  try {
+    const newSong = await PlaylistModel.create(song);
+    res.status(200).json(newSong);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: err });
+  }
+});
 
 router.post("/add", validateJWT, async (req, res) => {
   const { title, description } = req.body.playlist;
