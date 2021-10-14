@@ -1,5 +1,6 @@
 const Express = require("express");
 const { validateJWT } = require("../middleware");
+const validateAdmin = require("../middleware/validateAdmin");
 // const validateJWT = require("../middleware/validate-jwt");
 const router = Express.Router();
 const { FavoriteSongModel } = require("../models");
@@ -34,6 +35,15 @@ router.get("/mine", validateJWT, async (req, res) => {
   }
 });
 
+router.get("/all", validateJWT, async (req, res) => {
+  try {
+    const entries = await FavoriteSongModel.findAll({});
+    res.status(200).json(entries);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
 router.delete("/delete/:id", validateJWT, async (req, res) => {
   const { mbid } = req.body.songs;
   const userId = req.user.id;
@@ -43,6 +53,23 @@ router.delete("/delete/:id", validateJWT, async (req, res) => {
       where: {
         mbid: mbid,
         userId: userId,
+      },
+    };
+
+    const deleteSong = await FavoriteSongModel.destroy(query);
+    res.status(200).json(deleteSong);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
+router.delete("/delete/admin/:id", validateAdmin, async (req, res) => {
+  const { id } = req.body.songs;
+
+  try {
+    const query = {
+      where: {
+        id: id,
       },
     };
 

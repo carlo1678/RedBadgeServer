@@ -14,7 +14,6 @@ const controllers = require("./controllers");
 app.use(Express.json());
 app.use("/user", controllers.userController);
 app.use("/songs", controllers.songsController);
-app.use("/playlist", controllers.playlistController);
 app.use("/comments", controllers.commentsController);
 
 dbConnection

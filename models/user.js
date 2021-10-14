@@ -11,6 +11,10 @@ const User = db.define("user", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  admin: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 // Add a role within the User model itself, after line 13. Set up admin as a role with a boolean as true or false. Set a default value for false. Create the initial admin user in Postman.
