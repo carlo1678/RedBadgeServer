@@ -44,6 +44,30 @@ router.get("/all", validateJWT, async (req, res) => {
   }
 });
 
+router.put("/update/:songId", validateJWT, async (req, res) => {
+  const mbid = req.body.songs;
+  const songId = req.body.songId;
+  const userId = req.user.id;
+
+  const query = {
+    where: {
+      songId: songId,
+      owner: userId,
+    },
+  };
+
+  const updatedSong = {
+    mbid: mbid,
+  };
+
+  try {
+    const update = await FavoriteSongModel.update(updatedSong, query);
+    res.status(200).json(update);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
 router.delete("/delete/:id", validateJWT, async (req, res) => {
   const { mbid } = req.body.songs;
   const userId = req.user.id;

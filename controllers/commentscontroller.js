@@ -33,6 +33,30 @@ router.get("/getall", async (req, res) => {
   }
 });
 
+router.put("/update/:commentId", validateJWT, async (req, res) => {
+  const comment = req.body.comments.comment;
+  const songId = req.body.songId;
+  const userId = req.user.id;
+
+  const query = {
+    where: {
+      songId: songId,
+      owner: userId,
+    },
+  };
+
+  const updatedComment = {
+    comment: comment,
+  };
+
+  try {
+    const update = await CommentsModel.update(updatedComment, query);
+    res.status(200).json(update);
+  } catch (err) {
+    res.status(500).json({ error: err });
+  }
+});
+
 // Add a get all route, to get all comments. (findAll where you match songId)
 
 router.delete("/delete/:id", validateJWT, async (req, res) => {
